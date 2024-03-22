@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace ServerLibrary.Repositories.Implementations
 {
-    internal class UserAccountRepository(IOptions<JwtSection> config,AppDbContext appDbContext) : IUserAccount
+    public class UserAccountRepository(IOptions<JwtSection> config,AppDbContext appDbContext) : IUserAccount
     {
         public async Task<GeneralResponse> CreateAsync(Register user)
         {
