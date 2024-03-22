@@ -46,7 +46,7 @@ namespace ServerLibrary.Repositories.Implementations
             SystemRole response = new();
             if(checkUserRole is null)
             {
-                response = await AddToDatabase(new SystemRole() { Name = Helpers.Constants.Admin });
+                response = await AddToDatabase(new SystemRole() { Name = Helpers.Constants.User });
                 await AddToDatabase(new UserRole() { RoleId = response.Id, UserId = applicationUser.Id });  
             }
             else
