@@ -1,4 +1,5 @@
 ﻿using BaseLibrary.DTOs;
+using BaseLibrary.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServerLibrary.Repositories.Contracts
 {
-    public class IUserAccount
+    public interface IUserAccount
     {
         Task<GeneralResponse> CreateAsync(Register user);
 
