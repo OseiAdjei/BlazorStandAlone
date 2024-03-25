@@ -94,12 +94,8 @@ namespace ServerLibrary.Repositories.Implementations
                     Token = refreshToken, Id = applicationUser.Id
                 });
             }
-
             return new LoginResponse(true, "Login successfully", jwtToken, refreshToken);
         }
-
-        
-
         private string GenerateToken(ApplicationUser user, string role)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.Value.Key!));
