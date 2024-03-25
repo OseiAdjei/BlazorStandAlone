@@ -65,7 +65,7 @@ namespace ServerLibrary.Repositories.Implementations
         {
             if (user is null) return new LoginResponse(false, "Model is empty");
 
-            var applicationUser = await FindUserByEmail(user.Email);
+            var applicationUser = await FindUserByEmail(user.Email!);
             if (applicationUser is null) return new LoginResponse(false, "User not found");
 
             if (BCrypt.Net.BCrypt.Verify(user.Password, applicationUser.Password))
@@ -74,7 +74,7 @@ namespace ServerLibrary.Repositories.Implementations
             var getUserRole = await appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == applicationUser.Id);
             if (getUserRole is null) return new LoginResponse(false, "user role not found");
 
-            var getRoleName = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == applicationUser.Id);
+            var getRoleName = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == getUserRole.Id);
             if (getUserRole is null) return new LoginResponse(false, "user role not found");
 
             string jwtToken = GenerateToken(applicationUser, getRoleName!.Name!);
