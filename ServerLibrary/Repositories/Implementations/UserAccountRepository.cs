@@ -91,7 +91,8 @@ namespace ServerLibrary.Repositories.Implementations
             {
                 await AddToDatabase(new RefreshTokenInfo()
                 {
-                    Token = refreshToken, Id = applicationUser.Id
+                    Token = refreshToken,
+                    UserId = applicationUser.Id
                 });
             }
             return new LoginResponse(true, "Login successfully", jwtToken, refreshToken);
