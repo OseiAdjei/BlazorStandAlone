@@ -74,7 +74,7 @@ namespace ServerLibrary.Repositories.Implementations
             var getUserRole = await appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == applicationUser.Id);
             if (getUserRole is null) return new LoginResponse(false, "user role not found");
 
-            var getRoleName = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == getUserRole.Id);
+            var getRoleName = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == getUserRole.RoleId);
             if (getUserRole is null) return new LoginResponse(false, "user role not found");
 
             string jwtToken = GenerateToken(applicationUser, getRoleName!.Name!);
