@@ -1,0 +1,53 @@
+﻿@page "/branches"
+@using Services
+@inject IInstitutionService iinstitutionservice
+@inject IJSRuntime jsRuntime
+<h3>Persons</h3>
+<a href="/branch/add" class="btn btn-outline-dark my-2">Add more</a>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach(var branch in branches)
+            {
+                <tr>
+                    <td>@branch.Name</td>
+                    <td>
+                            <a href="/person/edit/@branch.Id" class="btn btn-success">Edit</a>
+                            <a class="btn btn-danger" @onclick="async ()=> await Delete(branch)">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private List<BaseLibrary.Entities.Branch> branches = new();
+
+    private async Task Delete(BaseLibrary.Entities.Branch branch)
+    {
+        bool confirmed = await jsRuntime.InvokeAsync<bool>("confirm", "Are you sure????");
+        if (confirmed)
+        {
+            if (iinstitutionservice.Delete(branch.Id))
+            {
+                branches.Remove(branch);
+            }
+
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        branches = iinstitutionservice.GetAll();
+        base.OnInitialized();
+    }
+}
