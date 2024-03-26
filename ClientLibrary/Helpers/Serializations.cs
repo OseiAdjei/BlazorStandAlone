@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientLibrary.Helpers
 {
-    internal class Serializations
+    public static class Serializations
     {
         public static string SerializeObj<T>(T modelObject) => JsonSerializer.Serialize(modelObject);
         public static T DeserializeJsonString<T>(string jsonString) => JsonSerializer.Deserialize<T>(jsonString);
