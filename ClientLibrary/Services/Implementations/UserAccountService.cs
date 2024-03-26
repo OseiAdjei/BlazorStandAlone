@@ -15,7 +15,7 @@ namespace ClientLibrary.Services.Implementations
     {
         public const string AuthUrl = "api/authentication";
 
-  async Task<GeneralResponse> IUserAccountService.CreateAsync(Register user)
+        public async Task<GeneralResponse> CreateAsync(Register user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
@@ -23,7 +23,7 @@ namespace ClientLibrary.Services.Implementations
 
             return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
         }
-  async Task<LoginResponse> IUserAccountService.SignInAsync(Register user)
+        public async Task<GeneralResponse> SignInAsync (Login user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);
@@ -36,10 +36,11 @@ namespace ClientLibrary.Services.Implementations
             throw new NotImplementedException();
         }
 
-
-        Task<WeatherForecast[]> IUserAccountService.GetWeatherForecast()
+        public async Task<WeatherForecast[]> GetWeatherForecast()
         {
-            throw new NotImplementedException();
+            var httpClient = await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.GetFromJsonAsAsyncEnumerable<WeatherForecast[]>("api/weatherforecast");
+            return result;
         }
     }
 }
